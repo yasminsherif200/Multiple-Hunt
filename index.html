@@ -4,53 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multiple Hunt</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/src/index.css" />
   </head>
   <body>
-    <div id="start-screen" class="screen active">
-        <h1>MULTIPLE <span>HUNT</span></h1>
-        <div class="how-to-play">
-            <h2>How to Play</h2>
-            <ul>
-                <li>Click or tap the numbers that satisfies the condition</li>
-                <li>Score before time runs out!</li>
-            </ul>
-        </div>
-        <button id="play-button">PLAY NOW</button>
-    </div>
-
-    <div id="game-screen" class="screen">
-        <div class="game-header">
-            <div class="header-left">
-                <div id="level-display">Level 1</div>
-                <div id="score-display">Score: 0</div>
-            </div>
-            <div class="header-right">
-                <div id="timer-display">00:20</div>
-            </div>
+    <div id="app">
+      <button id="lang-toggle" class="lang-btn">العربية</button>
+      
+      <main class="home-container" id="home-screen">
+        <h1 id="game-title">
+          <span class="title-part-1">MULTIPLE</span>
+          <span class="title-part-2">HUNT</span>
+        </h1>
+        
+        <div class="card" id="home-card">
+          <h2 id="how-to-play-title">HOW TO PLAY</h2>
+          <ul class="rules-list">
+            <li id="rule-1">Click or tap the numbers that satisfies the condition</li>
+            <li id="rule-2">Score before time runs out!</li>
+          </ul>
         </div>
         
-        <div class="game-content">
-            <h2 id="condition-text">Pick the largest no. multiple of 5</h2>
-            <div id="cards-container" class="cards-grid">
-                <!-- Cards will be generated here -->
-            </div>
-        </div>
-    </div>
+        <button id="play-btn" class="primary-btn">PLAY NOW</button>
+      </main>
 
-    <div id="popup-overlay" class="popup-overlay">
-        <div class="popup-content">
-            <h2 id="popup-message"></h2>
-            <div id="final-score-container" class="hidden">
-                <p>Final Score: <span id="final-score">0</span></p>
-                <p id="correct-answer" class="correct-answer-text"></p>
-                <button id="try-again-button">Try Again</button>
-                <button id="return-home-button" class="secondary-button">Return Home</button>
+      <main class="game-container hidden" id="game-screen">
+        <div class="game-card">
+          <div class="game-header">
+            <div class="stats">
+              <div id="level-display">Level: 1</div>
+              <div id="score-display">Score: 0</div>
             </div>
-            <button id="next-level-button" class="hidden">Next Level</button>
+            <div class="timer" id="timer-display">00:20</div>
+          </div>
+          
+          <div class="condition-box">
+            <h2 id="condition-text">Pick the Greatest multiple of 5</h2>
+          </div>
+          
+          <div class="numbers-grid" id="numbers-grid">
+            <!-- 6 number cards will be generated here -->
+          </div>
         </div>
-    </div>
+      </main>
 
-    <script src="script.js"></script>
+      <div class="modal-overlay hidden" id="modal-overlay">
+        <div class="modal" id="game-modal">
+          <h2 id="modal-title">You won</h2>
+          <div id="modal-body">
+            <p id="final-score-text" class="hidden">Final Score: 0</p>
+            <p id="correct-answer-text" class="hidden">Correct answer was: 25</p>
+          </div>
+          <div class="modal-actions">
+            <button id="next-level-btn" class="modal-btn primary-btn hidden">Next Level</button>
+            <button id="try-again-btn" class="modal-btn primary-btn hidden">Try Again</button>
+            <button id="return-home-btn" class="modal-btn secondary-btn hidden">Return Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/script.js"></script>
   </body>
 </html>
+
