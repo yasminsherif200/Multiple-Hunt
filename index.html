@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multiple Hunt</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <div id="app">
       <button id="lang-toggle" class="lang-btn">العربية</button>
-      <img src="logo/sbs_ic (1).png" type="image/x-icon" class="app-logo" alt="Logo"/>
+      <img src="logo/sbs_ic (1).png" class="app-logo" alt="Logo" referrerPolicy="no-referrer" />
       
       <main class="home-container" id="home-screen">
         <h1 id="game-title">
@@ -25,7 +25,10 @@
           </ul>
         </div>
         
-        <button id="play-btn" class="primary-btn">PLAY NOW</button>
+        <div class="home-actions">
+          <button id="play-btn" class="primary-btn">PLAY NOW</button>
+          <button id="levels-btn-home" class="secondary-btn-home">LEVELS</button>
+        </div>
       </main>
 
       <main class="game-container hidden" id="game-screen">
@@ -36,6 +39,9 @@
               <div id="score-display">Score: 0</div>
             </div>
             <div class="timer" id="timer-display">00:20</div>
+            <button id="levels-btn-game" class="icon-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            </button>
           </div>
           
           <div class="condition-box">
@@ -62,8 +68,20 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-overlay hidden" id="levels-modal-overlay">
+        <div class="modal" id="levels-modal">
+          <h2 id="levels-modal-title">Levels</h2>
+          <div class="levels-grid" id="levels-grid">
+            <!-- Levels will be generated here -->
+          </div>
+          <div class="modal-actions">
+            <button id="close-levels-btn" class="modal-btn secondary-btn">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
   </body>
 </html>
 

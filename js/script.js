@@ -24,7 +24,9 @@ const translations = {
         tryAgain: "Try Again",
         returnHome: "Return Home",
         finalScore: "Final Score: ",
-        correctAnswer: "Correct answer was: "
+        correctAnswer: "Correct answer was: ",
+        levelsTitle: "Levels",
+        closeBtn: "Close"
     },
     ar: {
         title1: "صيد",
@@ -51,7 +53,9 @@ const translations = {
         tryAgain: "حاول مرة أخرى",
         returnHome: "العودة للرئيسية",
         finalScore: "النتيجة النهائية: ",
-        correctAnswer: "الإجابة الصحيحة كانت: "
+        correctAnswer: "الإجابة الصحيحة كانت: ",
+        levelsTitle: "المستويات",
+        closeBtn: "إغلاق"
     }
 };
 
@@ -63,11 +67,14 @@ let timerInterval = null;
 let flipInterval = null;
 let currentNumbers = [];
 let correctAnswer = null;
+let maxLevelPassed = parseInt(localStorage.getItem('maxLevelPassed')) || 0;
 
 const homeScreen = document.getElementById('home-screen');
 const gameScreen = document.getElementById('game-screen');
 const modalOverlay = document.getElementById('modal-overlay');
+const levelsModalOverlay = document.getElementById('levels-modal-overlay');
 const numbersGrid = document.getElementById('numbers-grid');
+const levelsGrid = document.getElementById('levels-grid');
 
 function updateUI() {
     const t = translations[currentLang];
@@ -116,17 +123,63 @@ function updateUI() {
     
     const returnHomeBtn = document.getElementById('return-home-btn');
     if (returnHomeBtn) returnHomeBtn.textContent = t.returnHome;
+
+    const levelsModalTitle = document.getElementById('levels-modal-title');
+    if (levelsModalTitle) levelsModalTitle.textContent = t.levelsTitle;
+
+    const closeLevelsBtn = document.getElementById('close-levels-btn');
+    if (closeLevelsBtn) closeLevelsBtn.textContent = t.closeBtn;
+
+    const levelsBtnHome = document.getElementById('levels-btn-home');
+    if (levelsBtnHome) levelsBtnHome.textContent = t.levelsTitle;
     
     document.documentElement.dir = t.dir;
     document.documentElement.lang = currentLang;
 }
 
-function startGame() {
+function startGame(startAtLevel = 1) {
     homeScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
-    level = 1;
+    level = startAtLevel;
     score = 0;
     startLevel();
+}
+
+function showLevelsModal() {
+    levelsModalOverlay.classList.remove('hidden');
+    generateLevelsGrid();
+}
+
+function hideLevelsModal() {
+    levelsModalOverlay.classList.add('hidden');
+}
+
+function generateLevelsGrid() {
+    levelsGrid.innerHTML = '';
+    const totalLevels = 4;
+    
+    for (let i = 1; i <= totalLevels; i++) {
+        const card = document.createElement('div');
+        card.className = 'level-card';
+        card.textContent = i;
+        
+        if (i <= maxLevelPassed) {
+            card.classList.add('passed');
+        } else if (i === maxLevelPassed + 1) {
+            card.classList.add('current');
+        } else {
+            card.classList.add('locked');
+        }
+        
+        if (i <= maxLevelPassed + 1) {
+            card.addEventListener('click', () => {
+                hideLevelsModal();
+                startGame(i);
+            });
+        }
+        
+        levelsGrid.appendChild(card);
+    }
 }
 
 function startLevel() {
@@ -320,6 +373,11 @@ function showModal(type) {
     title.classList.remove('finished');
     
     if (type === 'won') {
+        if (level > maxLevelPassed) {
+            maxLevelPassed = level;
+            localStorage.setItem('maxLevelPassed', maxLevelPassed);
+        }
+        
         if (level === 4) {
             title.textContent = t.gameFinished;
             title.classList.add('finished');
@@ -350,7 +408,20 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
     updateUI();
 });
 
-document.getElementById('play-btn').addEventListener('click', startGame);
+document.getElementById('play-btn').addEventListener('click', () => startGame(maxLevelPassed + 1 > 4 ? 1 : maxLevelPassed + 1));
+
+document.getElementById('levels-btn-home').addEventListener('click', showLevelsModal);
+document.getElementById('levels-btn-game').addEventListener('click', () => {
+    clearInterval(timerInterval);
+    clearInterval(flipInterval);
+    showLevelsModal();
+});
+document.getElementById('close-levels-btn').addEventListener('click', () => {
+    hideLevelsModal();
+    if (!gameScreen.classList.contains('hidden')) {
+        startLevel(); // Resume level if in game
+    }
+});
 
 document.getElementById('next-level-btn').addEventListener('click', () => {
     modalOverlay.classList.add('hidden');
@@ -360,7 +431,7 @@ document.getElementById('next-level-btn').addEventListener('click', () => {
 
 document.getElementById('try-again-btn').addEventListener('click', () => {
     modalOverlay.classList.add('hidden');
-    startGame();
+    startLevel(); // Restart current level instead of reset to 1
 });
 
 document.getElementById('return-home-btn').addEventListener('click', () => {

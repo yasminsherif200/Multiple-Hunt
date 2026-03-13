@@ -38,17 +38,6 @@ body {
     flex-direction: column;
 }
 
-.app-logo {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    z-index: 100;
-    object-fit: contain;
-    transition: all var(--transition-speed);
-}
-
 .lang-btn {
     position: absolute;
     top: 20px;
@@ -71,6 +60,17 @@ body {
     background-color: var(--teal);
     color: var(--navy);
     box-shadow: 0 0 15px var(--teal);
+}
+
+.app-logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+    object-fit: contain;
+    transition: all var(--transition-speed);
 }
 
 .home-container {
@@ -148,6 +148,94 @@ h1 {
     color: var(--coral);
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.home-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.secondary-btn-home {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.secondary-btn-home:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--navy);
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.level-card {
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    border: 2px solid transparent;
+}
+
+.level-card.passed {
+    background-color: var(--teal);
+    color: var(--white);
+}
+
+.level-card.current {
+    background-color: var(--coral);
+    color: var(--white);
+    border-color: var(--navy);
+}
+
+.level-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #e5e7eb;
+}
+
+.level-card:not(.locked):hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .primary-btn {
